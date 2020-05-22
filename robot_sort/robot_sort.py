@@ -96,8 +96,39 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # I don't know what sorting alg this is. I will start at the beginning, drop None and pick up first item
+        # I will go along, and ask if current item is smaller than picked up item, until at the end I'm holding 
+        # the smallest item. I will then move left until current item is None, and i will swap. I will then swap
+        # again on the item to the right of none, and do the algorithm again. None will always be to the right of
+        # the sorted array.
+        self.set_light_on()
+        self.swap_item() # Drop None, pick up first item
+        while self.light_is_on():
+            while self.can_move_right(): # As long as we can move right, 
+                self.move_right() # Move right
+                if self.compare_item() == "None":
+                    print(' self.compare_item() == "None"',self._list)
+                if self.compare_item() == 1: # And if the item we are holding is greater than at list position, swap
+                    self.swap_item()
+
+            print("Got to last place", self._list[self._position], len(self._list), self._position, self._item)
+
+            # We are on the last list item
+            if self.compare_item() == None: # If last item is None, 
+                print("got None is last item", self._list[self._position])
+                self.set_light_off() # stop loop
+                break
+    
+            while self.can_move_left(): # While we can move lift
+                self.move_left() # Move left
+                if self.compare_item() == None: # Until we are on top of None
+                    self.swap_item() # And swap our smallest item for none
+                    self.move_right() # We then move to the first unsorted item
+                    self.swap_item() # Drop None to the right of our last sorted item, and pick up first unsorted item
+
+            print('lizt', self._list)
+
+
 
 
 if __name__ == "__main__":
