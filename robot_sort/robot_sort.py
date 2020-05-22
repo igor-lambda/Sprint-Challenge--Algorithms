@@ -104,18 +104,21 @@ class SortingRobot:
         self.set_light_on()
         self.swap_item() # Drop None, pick up first item
         while self.light_is_on():
+            print('holding before', self._item)
             while self.can_move_right(): # As long as we can move right, 
                 self.move_right() # Move right
                 if self.compare_item() == "None":
                     print(' self.compare_item() == "None"',self._list)
                 if self.compare_item() == 1: # And if the item we are holding is greater than at list position, swap
                     self.swap_item()
+                    print("picked up", self._item)
 
             print("Got to last place", self._list[self._position], len(self._list), self._position, self._item)
 
             # We are on the last list item
             if self.compare_item() == None: # If last item is None, 
                 print("got None is last item", self._list[self._position])
+                self.swap_item()
                 self.set_light_off() # stop loop
                 break
     
@@ -125,7 +128,8 @@ class SortingRobot:
                     self.swap_item() # And swap our smallest item for none
                     self.move_right() # We then move to the first unsorted item
                     self.swap_item() # Drop None to the right of our last sorted item, and pick up first unsorted item
-
+                    break # This is the break I was missing that caused it to 
+            print('holding after', self._item)
             print('lizt', self._list)
 
 
